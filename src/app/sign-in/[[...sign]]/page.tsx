@@ -1,10 +1,8 @@
+import { SignIn } from "@clerk/nextjs";
 
-import { SignIn } from "@clerk/remix";
- 
-export default function SignInPage() {
+export default function Page() {
   return (
-    <div>
-      <h1>Sign In route</h1>
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <SignIn />
     </div>
   );

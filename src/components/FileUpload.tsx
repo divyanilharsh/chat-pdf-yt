@@ -1,4 +1,5 @@
 "use client";
+import { uploadToS3 } from "@/lib/s3";
 import { error } from "console";
 import { Inbox } from "lucide-react";
 import React from "react";

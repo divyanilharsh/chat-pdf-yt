@@ -1,13 +1,32 @@
 "use client";
 import { uploadToS3 } from "@/lib/s3";
+import { useMutation } from "@tanstack/react-query";
 import { error } from "console";
 import { Inbox } from "lucide-react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-
+import axios from 'axios'
+import { toast } from "react-hot-toast";
 
 
 const FileUpload = () => {
+  const {mutate} = useMutation({
+    mutationFn: async ({file_key , file_name}:{
+      file_key:string; 
+      file_name:string;
+    }) => {
+        const response = await axios.post('/api/creat-chat',{ 
+          file_key ,
+         file_name,
+        });
+        return response.data;
+
+  },
+
+   
+  })
+
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'application/pdf': ['.pdf'] }, // Corrected syntax
     maxFiles: 1,
@@ -15,11 +34,25 @@ const FileUpload = () => {
       console.log(acceptedFiles);
       const file = acceptedFiles[0]
       if(file.size > 10*1024*1024){
+        toast.error("BIG FILE")
         alert('BIG FILE')
         return
       }
       try{
       const data = await uploadToS3(file);
+      if(!data?.file_key|| !data.file_name){
+         alert("someting went wrong")
+         toast.error('someting went wrong')
+         return
+      }
+      mutate(data,{
+        onSuccess:(data) => {
+            console.log(data);
+        },
+        onError :(err)=>{
+          console.log(err)
+        }
+      })
       console.log('data',data)
       }catch(error){
         console.log(error);

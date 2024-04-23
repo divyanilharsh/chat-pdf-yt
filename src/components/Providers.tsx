@@ -1,16 +1,17 @@
-'use client' // Add this line to mark it as a Client Component
+"use client";
+import React from "react";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
-import React from 'react'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+type Props = {
+  children: React.ReactNode;
+};
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+const Providers = ({ children }: Props) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  )
-}
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
 
-export default Providers
+export default Providers;

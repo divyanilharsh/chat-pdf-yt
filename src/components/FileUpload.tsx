@@ -17,10 +17,17 @@ interface MutationVariables {
 }
 
 const FileUpload = () => {
+
   const [uploading, setUploading] = React.useState(false);
-  const { mutate, isLoading } = useMutation<MutationData, Error, MutationVariables>({
-    mutationFn: async ({ file_key, file_name }) => {
-      const response = await axios.post('/api/create-chat', {
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async ({
+      file_key,
+      file_name,
+    }: {
+      file_key: string;
+      file_name: string;
+    }) => {
+      const response = await axios.post("/api/create-chart", {
         file_key,
         file_name,
       });

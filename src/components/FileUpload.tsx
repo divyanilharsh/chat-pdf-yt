@@ -27,7 +27,7 @@ const FileUpload = () => {
       file_key: string;
       file_name: string;
     }) => {
-      const response = await axios.post("/api/create-chart", {
+      const response = await axios.post("/api/create-chat", {
         file_key,
         file_name,
       });
@@ -55,7 +55,10 @@ const FileUpload = () => {
        }
        mutate(data, {
          onSuccess: (data) => {
-           toast.success(data.message);
+          console.log('sdata')
+          console.log(data)
+          console.log('edata')
+           //toast.success(data.message);
          },
          onError: (err) => {
            console.log(err)
